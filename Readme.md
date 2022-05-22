@@ -65,21 +65,43 @@ the maximum of information from the everyday testing process.
 Click <a target="_blank" href="https://jenkins.autotests.cloud/job/11-Mara_dol-api/2/allure/">here</a> to see the report for "Petstore"
 
 
-### There are test suites
+### Test suites
 
 <p align="center">
 <img title="Allure Test Suites" src="images/screenshot/allureTestSuites.PNG">
 </p>
 
 
-### There are graphs
+### Graphs
 
 <p align="center">
 <img title="Allure Graphs" src="images/screenshot/allureGraphs.PNG">
 </p>
 
 
+## Allure TestOps
+
+Allure TestOps allows you to manage testing in one place. 
+Supports the full testing lifecycle for both manual and automated tests.
+
+Click <a target="_blank" href="https://allure.autotests.cloud/project/1335/launches">here</a> to see the lanches for "Petstore"
+
+### Dashboard
+<p align="center">
+<img title="TestOps Dashboard" src="images/screenshot/testOpsDashboard.PNG">
+</p>
+
+### Test Cases
+<p align="center">
+<img title="TestOps Test Cases" src="images/screenshot/testOpsTestCases.PNG">
+</p>
+
+
 ## Telegram Notification
 
 After the tests are completed, the report comes to Telegram using a bot
+
+<p align="center">
+<img title="Telegram Notification" src="images/screenshot/telegramNotification.PNG">
+</p>
 
