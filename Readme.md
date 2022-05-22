@@ -19,8 +19,11 @@ Click [here](https://petstore.swagger.io/) to take a look at the website!
 ## What is special about this project:
 
 ✓ RestAssured library
+
 ✓ Specifications
+
 ✓ Lombok models
+
 ✓ Request log custom templates
 
 
@@ -34,8 +37,13 @@ gradle clean test
 ## Test cases
 
 ✓ Add a new pet to the store
+
 ✓ Find pet by ID
+
+✓ Find pet by status
+
 ✓ Delete a pet
+
 ✓ Find non-existing pet by ID
 
 
