@@ -1,18 +1,16 @@
 package tests;
 
 import io.restassured.response.Response;
-import models.Pet;
 import models.lombok.DataModel;
-import org.assertj.core.api.Assert;
+import models.Pet;
+
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
-import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import static specs.Specs.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -23,7 +21,7 @@ public class PetStoreTest extends TestBase {
     @DisplayName("Add a new pet to the store")
     void addNewPet() {
         Pet pet = new Pet();
-        pet.setId(123);
+        pet.setId(99);
         pet.setName("Kitten");
         pet.setStatus("sold");
 
@@ -46,53 +44,54 @@ public class PetStoreTest extends TestBase {
     @Test
     @DisplayName("Find pet by ID")
     void findPetById() {
-        Response response =
+        DataModel response =
                 given()
                         .spec(request)
                         .when()
-                        .get("/pet/123")
+                        .get("/pet/99")
+                        .then()
+                        .spec(response200)
+                        .log().body()
+                        .extract().as(DataModel.class);
+
+        Integer Id = 99;
+        String name = "Kitten";
+        String status = "sold";
+
+       assertEquals(Id, response.getId());
+       assertEquals(name, response.getName());
+       assertEquals(status, response.getStatus());
+    }
+
+    @Order(3)
+    @Test
+    @DisplayName("Update a pet in the store with form data")
+    void updatePet() {
+
+        Response responseUpdatePet =
+                given()
+                        .spec(requestUrlencoded)
+                        .contentType("application/x-www-form-urlencoded")
+                        .param("id", "99")
+                        .param("name", "Kitten")
+                        .param("status", "pending")
+                        .when()
+                        .post("/pet/99")
                         .then()
                         .spec(response200)
                         .log().body()
                         .extract().response();
 
-        Integer Id = 123;
-        String name = "Kitten";
-        String status = "sold";
+        Integer code = 200;
+        String type = "unknown";
+        String message = "99";
 
-        assertEquals(Id, response.path("id"));
-        assertEquals(name, response.path("name"));
-        assertEquals(status, response.path("status"));
+        assertEquals(code, responseUpdatePet.path("code"));
+        assertEquals(type, responseUpdatePet.path("type"));
+        assertEquals(message, responseUpdatePet.path("message"));
     }
 
-
-    //@Order(3)
-    @Test
-    @DisplayName("Find pet by status")
-    void findPetByStatus() {
-//        Pet pet = new Pet();
-//       // pet.setStatus("sold");
-//
-        DataModel [] response =
-                given()
-                        .spec(request)
-                        .when()
-                        .get("/pet/findByStatus?status=sold")
-                        .then()
-                        .spec(response200)
-                        .log().body()
-                        .extract().as(DataModel[].class);
-
-        Stream.of(response).filter(pet -> pet.getPet().getName().equals("Kitten"));
-
-       // Integer id = 123;
-//        String name = "Kitten";
-//        String status = "sold";
-        System.out.println(" !!!!!!" + Arrays.toString(response));
-  //      assertThat(Arrays.toString(response)
-      //  assertThat(response.toString()).contains("kuiuy") ;
-    }
-    @Order(3)
+    @Order(4)
     @Test
     @DisplayName("Delete a pet")
     void deletePet() {
@@ -101,7 +100,7 @@ public class PetStoreTest extends TestBase {
                 given()
                         .spec(request)
                         .when()
-                        .delete("/pet/123")
+                        .delete("/pet/99")
                         .then()
                         .spec(response200)
                         .log().body()
@@ -109,14 +108,14 @@ public class PetStoreTest extends TestBase {
 
         Integer code = 200;
         String type = "unknown";
-        String message = "123";
+        String message = "99";
 
         assertEquals(code, response.path("code"));
         assertEquals(type, response.path("type"));
         assertEquals(message, response.path("message"));
     }
 
-    @Order(4)
+    @Order(5)
     @Test
     @DisplayName("Find non-existing pet by ID")
     void findNonExistingPetById() {
@@ -124,7 +123,7 @@ public class PetStoreTest extends TestBase {
                 given()
                         .spec(request)
                         .when()
-                        .get("/pet/123")
+                        .get("/pet/99")
                         .then()
                         .spec(response404)
                         .log().body()
@@ -138,5 +137,33 @@ public class PetStoreTest extends TestBase {
         assertEquals(type, response.path("type"));
         assertEquals(message, response.path("message"));
 
+    }
+
+    @Order(6)
+    @Test
+    @DisplayName("Update non-existing pet in the store with form data")
+    void updateNonExistingPet() {
+
+        Response responseNonExistingPet =
+                given()
+                        .spec(requestUrlencoded)
+                        .contentType("application/x-www-form-urlencoded")
+                        .param("id", "99")
+                        .param("name", "Kitten")
+                        .param("status", "pending")
+                        .when()
+                        .post("/pet/99")
+                        .then()
+                        .spec(response404)
+                        .log().body()
+                        .extract().response();
+
+        Integer code = 404;
+        String type = "unknown";
+        String message = "not found";
+
+        assertEquals(code, responseNonExistingPet.path("code"));
+        assertEquals(type, responseNonExistingPet.path("type"));
+        assertEquals(message, responseNonExistingPet.path("message"));
     }
 }

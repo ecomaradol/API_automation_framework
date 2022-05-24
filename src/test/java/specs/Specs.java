@@ -18,6 +18,11 @@ public class Specs {
             .log().all()
             .contentType(ContentType.JSON);
 
+    public static RequestSpecification requestUrlencoded = with()
+            .filter(withCustomTemplates())
+            .basePath("/v2")
+            .log().all();
+
     public static ResponseSpecification response200 = new ResponseSpecBuilder()
             .expectStatusCode(200)
             .log(LogDetail.STATUS)
@@ -29,10 +34,4 @@ public class Specs {
             .log(LogDetail.STATUS)
             .log(LogDetail.BODY)
             .build();
-
-//    public static ResponseSpecification response400 = new ResponseSpecBuilder()
-//            .expectStatusCode(400)
-//            .log(LogDetail.STATUS)
-//            .log(LogDetail.BODY)
-//            .build();
 }
