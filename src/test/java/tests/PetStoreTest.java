@@ -19,7 +19,7 @@ public class PetStoreTest extends TestBase {
     @Order(1)
     @Test
     @DisplayName("Add a new pet to the store")
-    void addNewPet() {
+    void addNewPetTest() {
         Pet pet = new Pet();
         pet.setId(99);
         pet.setName("Kitten");
@@ -43,7 +43,7 @@ public class PetStoreTest extends TestBase {
     @Order(2)
     @Test
     @DisplayName("Find pet by ID")
-    void findPetById() {
+    void findPetByIdTest() {
         DataModel response =
                 given()
                         .spec(request)
@@ -66,7 +66,7 @@ public class PetStoreTest extends TestBase {
     @Order(3)
     @Test
     @DisplayName("Update a pet in the store with form data")
-    void updatePet() {
+    void updatePetTest() {
 
         Response responseUpdatePet =
                 given()
@@ -94,7 +94,7 @@ public class PetStoreTest extends TestBase {
     @Order(4)
     @Test
     @DisplayName("Delete a pet")
-    void deletePet() {
+    void deletePetTest() {
 
         Response response =
                 given()
@@ -118,7 +118,7 @@ public class PetStoreTest extends TestBase {
     @Order(5)
     @Test
     @DisplayName("Find non-existing pet by ID")
-    void findNonExistingPetById() {
+    void findNonExistingPetByIdTest() {
         Response response =
                 given()
                         .spec(request)
@@ -142,7 +142,7 @@ public class PetStoreTest extends TestBase {
     @Order(6)
     @Test
     @DisplayName("Update non-existing pet in the store with form data")
-    void updateNonExistingPet() {
+    void updateNonExistingPetTest() {
 
         Response responseNonExistingPet =
                 given()
